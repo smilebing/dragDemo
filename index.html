@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <!--    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/jquery.ui.touch-punch.js"></script>
 </head>
-<body>
+<body style="height: 600px;width: 300px;background-color:#59894F ">
 <!--bgcolor="#59894F"-->
 <div align="center">
     <div class="row">
@@ -26,27 +26,27 @@
             </div>
         </div>
     </div>
-    <!--    <div>-->
-    <!--        <div id="shaobei" style="width: 50px;height: 100px">-->
-    <!--            <img src="./img/shaobei.png" height="100" width="50">-->
-    <!--        </div>-->
+    <div>
+        <div id="shaobei" style="width: 50px;height: 100px">
+            <img src="./img/shaobei.png" height="100" width="50">
+        </div>
 
-    <!--        <div id="gaomengsuanjia" style="width: 100px;height: 50px">-->
-    <!--            <img src="./img/gaomengsuanjia.png" height="50" width="100">-->
-    <!--        </div>-->
+        <div id="gaomengsuanjia" style="width: 100px;height: 50px">
+            <img src="./img/gaomengsuanjia.png" height="50" width="100">
+        </div>
 
-    <!--        <div id="shuipen" style="width: 50px;height: 100px">-->
-    <!--            <img src="./img/shuipen.png" height="100" width="50">-->
-    <!--        </div>-->
+        <div id="shuipen" style="width: 50px;height: 100px">
+            <img src="./img/shuipen.png" height="100" width="50">
+        </div>
 
-    <!--        <div id="shiguan" style="width: 50px;height: 100px">-->
-    <!--            <img src="./img/shiguan.png" height="100" width="50">-->
-    <!--        </div>-->
+        <div id="shiguan" style="width: 50px;height: 100px">
+            <img src="./img/shiguan.png" height="100" width="50">
+        </div>
 
-    <!--        <div id="guanzi" style="width: 150px;height: 50px">-->
-    <!--            <img src="./img/guanzi.png" height="50" width="150">-->
-    <!--        </div>-->
-    <!--    </div>-->
+        <div id="guanzi" style="width: 150px;height: 50px">
+            <img src="./img/guanzi.png" height="50" width="150">
+        </div>
+    </div>
 
 
     <div id="droppable" class="ui-widget-header" style="width: 300px;height:300px">
@@ -57,6 +57,8 @@
 </body>
 
 <script>
+
+
     $(function () {
         $("#draggable, #draggable-nonvalid").draggable();
         $("#gaomengsuanjia, #guanzi,#jiujingdeng,#shaobei,#shiguan,#shuipen,#tiejia").draggable({
@@ -80,60 +82,6 @@
                 $("#droppable").append('<img src="./img/finish.png">');
             }
         });
-
-        // jQuery UI draggable 适配移动端
-
-        var moveFlag = 0; // 是否移动的flag
-        // /iPad|iPhone|Android/.test( navigator.userAgent ) &&
-        (function ($) {
-            var proto = $.ui.mouse.prototype, _mouseInit = proto._mouseInit;
-            $.extend(proto, {
-                _mouseInit: function () {
-                    this.element.bind("touchstart." + this.widgetName, $.proxy(this, "_touchStart"));
-                    _mouseInit.apply(this, arguments);
-                }, _touchStart: function (event) {
-                    this.element.bind("touchmove." + this.widgetName, $.proxy(this, "_touchMove")).bind("touchend." + this.widgetName, $.proxy(this, "_touchEnd"));
-                    this._modifyEvent(event);
-                    $(document).trigger($.Event("mouseup"));
-                    //reset mouseHandled flag in ui.mouse
-                    this._mouseDown(event);
-                    //console.log(this);
-                    //return false;
-
-                    //--------------------touchStart do something--------------------
-                    console.log("i touchStart!");
-
-                }, _touchMove: function (event) {
-                    moveFlag = 1;
-                    this._modifyEvent(event);
-                    this._mouseMove(event);
-
-                    //--------------------touchMove do something--------------------
-                    console.log("i touchMove!");
-
-                }, _touchEnd: function (event) {
-                    // 主动触发点击事件
-                    if (moveFlag == 0) {
-                        var evt = document.createEvent('Event');
-                        evt.initEvent('click', true, true);
-                        this.handleElement[0].dispatchEvent(evt);
-                    }
-                    this.element.unbind("touchmove." + this.widgetName).unbind("touchend." + this.widgetName);
-                    this._mouseUp(event);
-                    moveFlag = 0;
-
-                    //--------------------touchEnd do something--------------------
-                    console.log("i touchEnd!");
-
-                }, _modifyEvent: function (event) {
-                    event.which = 1;
-                    var target = event.originalEvent.targetTouches[0];
-                    event.pageX = target.clientX;
-                    event.pageY = target.clientY;
-                }
-            });
-        })(jQuery);
-
     });
 </script>
 
