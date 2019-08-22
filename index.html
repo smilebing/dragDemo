@@ -11,15 +11,11 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="js/jquery.ui.touch-punch.js"></script>
 </head>
-<body style="height: 600px;width: 300px;background-color:#59894F ">
+<body style="height: 800px;width: 300px;background-color:#59894F ">
 <!--bgcolor="#59894F"-->
 <div align="center">
     <div class="row">
-        <div class="col-xs-6 col-md-8" style="border:1px solid #F00">
-            <div id="tiejia" style="border:1px solid #F00">
-                <img src="./img/tiejia.png" width="50px" height="50px">
-            </div>
-        </div>
+
         <div class="col-xs-6 col-md-8" style="border:1px solid #F00">
             <div id="jiujingdeng" style="border:1px solid #F00" draggable="true">
                 <img src="./img/jiujingdeng.png" width="50px" height="50px">
@@ -39,7 +35,7 @@
             <img src="./img/shuipen.png" height="100" width="50">
         </div>
 
-        <div id="shiguan" style="width: 50px;height: 100px">
+        <div id="shiguan" style="width: 50px;height: 100px;border:1px #2b2b2b solid">
             <img src="./img/shiguan.png" height="100" width="50">
         </div>
 
@@ -49,8 +45,10 @@
     </div>
 
 
-    <div id="droppable" class="ui-widget-header" style="width: 300px;height:300px">
-        <p>accept: '#draggable'</p>
+    <div id="droppable" class="ui-widget-header" style="width: 300px;height:300px;border:1px solid #F00">
+        <div id="tiejia" style="border:1px solid #F00">
+            <img src="./img/tiejia.png">
+        </div>
     </div>
 </div>
 
@@ -60,7 +58,7 @@
 
 
     $(function () {
-        $("#draggable, #draggable-nonvalid").draggable();
+        // $("#draggable, #draggable-nonvalid").draggable();
         $("#gaomengsuanjia, #guanzi,#jiujingdeng,#shaobei,#shiguan,#shuipen,#tiejia").draggable({
             cancel: "a.ui-icon", // clicking an icon won't initiate dragging
             revert: "invalid", // when not dropped, the item will revert back to its initial position
@@ -70,16 +68,17 @@
         });
 
         $("#droppable").droppable({
-            accept: "#tiejia",
+            accept: "#shiguan",
             classes: {
                 "ui-droppable-active": "ui-state-active",
                 "ui-droppable-hover": "ui-state-hover"
             },
             drop: function (event, ui) {
-                $("#tiejia").remove();
+                $("#shiguan").remove();
 
                 console.log("wh");
-                $("#droppable").append('<img src="./img/finish.png">');
+                $("#droppable").empty();
+                $("#droppable").append('<div><img src="./img/tiejiashaobei.png"></div> ');
             }
         });
     });
